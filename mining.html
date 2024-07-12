@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zozone MINER: Mining</title>
+    <style>
+        body {
+            background-color: #131414;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #3498db;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 3em; /* Augmenter la taille du texte */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .mining-container {
+            text-align: center;
+            width: 300px;
+        }
+        .loader {
+            border: 16px solid #272929;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+        .bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 1%;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 25px;
+            animation: progress 30s linear forwards;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes progress {
+            0% { width: 1%; }
+            100% { width: 100%; }
+        }
+        .status {
+            font-size: 18px;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>ROBUX MINER</h1>
+    <div class="mining-container">
+        <div class="loader"></div>
+        <div class="bar-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="status">Initializing mining...</div>
+    </div>
+    <script>
+        const statusElement = document.querySelector('.status');
+        const progressBar = document.querySelector('.progress-bar');
+        
+        let blockCount = 1;
+        const miningDuration = 30000; // 30 seconds
+        const breakDuration = 3000; // 3 seconds
+
+        function updateStatus(text) {
+            statusElement.textContent = text;
+        }
+
+        function startMiningBlock(blockNumber) {
+            updateStatus(`Mining block ${blockNumber}...`);
+            progressBar.style.animation = 'none';
+            progressBar.offsetHeight; // Trigger reflow to restart the animation
+            progressBar.style.animation = `progress ${miningDuration / 1000}s linear forwards`;
+
+            setTimeout(() => {
+                updateStatus(`Successfully mined block ${blockNumber}!`);
+                blockCount++;
+                setTimeout(() => startMiningBlock(blockCount), breakDuration);
+            }, miningDuration);
+        }
+
+        // Start the mining process
+        startMiningBlock(blockCount);
+    </script>
+</body>
+</html>
